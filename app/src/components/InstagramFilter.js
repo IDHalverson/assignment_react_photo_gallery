@@ -8,7 +8,7 @@ class InstagramFilter extends Component {
         <select onChange={handler}>
           {options.map(el => {
             return (
-              <option value={el}>
+              <option key={el} value={el}>
                 {" "}{el}{" "}
               </option>
             );

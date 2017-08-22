@@ -9,7 +9,7 @@ class PhotosDisplay extends Component {
             return "";
           }
           return (
-            <div>
+            <div key={el.image}>
               <img src={el.image} key={el.image} alt="logo" />
               <h6>
                 Posted By: {el.user}
