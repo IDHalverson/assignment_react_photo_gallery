@@ -5,12 +5,14 @@ class PhotosDisplay extends Component {
     return (
       <div className="container">
         {this.props.currentPhotos.map(el => {
-          console.log(el.user);
           return (
             <div>
               <img src={el.image} key={el.image} alt="logo" />
               <h6>
-                {el.createdTime}
+                {el.user} :Made:
+                {el.createdTime} space:
+                {el.likes} likes
+                {el.numberOfComments} comments
               </h6>
             </div>
           );
