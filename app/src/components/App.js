@@ -16,7 +16,7 @@ const photos = require("../photos").data.map(post => {
     numberOfComments: post.comments.count
   };
 });
-
+var sortedPhotos = photos;
 var filters = [
   "None",
   "Normal",
@@ -45,7 +45,7 @@ class App extends Component {
   }
 
   paginate = photos => {
-    const displayedPhotos = photos;
+    const displayedPhotos = sortedPhotos;
     const currentPage = this.state.currentPage;
     const itemsPerPage = this.state.itemsPerPage;
     const arrayLength = Array.apply("1", Array(this.state.itemsPerPage));
@@ -60,15 +60,15 @@ class App extends Component {
 
   handleTimeFilter = () => {
     const order = this.state.timeFilter;
-    const paginatedPhotos = this.paginate(this.state.displayedPhotos);
+    sortedPhotos = this.state.photos.sort(function(a, b) {
+      if (a.createdTime > b.createdTime) {
+        return order === "DESC" ? -1 : 1;
+      } else {
+        return order === "DESC" ? 1 : -1;
+      }
+    });
     this.setState({
-      displayedPhotos: paginatedPhotos.sort(function(a, b) {
-        if (a.createdTime > b.createdTime) {
-          return order === "DESC" ? -1 : 1;
-        } else {
-          return order === "DESC" ? 1 : -1;
-        }
-      }),
+      displayedPhotos: this.paginate(sortedPhotos),
       timeFilter: order === "DESC" ? "ASC" : "DESC"
     });
   };
@@ -115,7 +115,8 @@ class App extends Component {
     });
   };
   handleInstagramFilter = e => {
-    const displayedPhotos = this.state.displayedPhotos;
+    const paginatedPhotos = this.paginate(this.state.displayedPhotos);
+    //const displayedPhotos = this.state.displayedPhotos;
     if (e.target.value === "None") {
       this.setState({
         displayedPhotos: paginatedPhotos
