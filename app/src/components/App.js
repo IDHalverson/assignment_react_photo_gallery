@@ -26,7 +26,10 @@ var filters = [
   "Inkwell",
   "Ludwig"
 ];
-
+var pageArray = [0, 1, 2, 3, 4, 5];
+var Paginate = function() {
+  pageArray.forEach(el => {});
+};
 // PAGINATION = = =
 // new Array(this.state.itemsPerPage).map((el, i) => {
 //   return [
@@ -59,33 +62,36 @@ class App extends Component {
 
   handleTimeFilter = () => {
     const order = this.state.timeFilter;
-    this.state.displayedPhotos = this.state.photos.sort(function(a, b) {
-      if (a.createdTime > b.createdTime) {
-        return order === "DESC" ? -1 : 1;
-      } else {
-        return order === "DESC" ? 1 : -1;
-      }
+    this.setState({
+      displayedPhotos: this.state.photos.sort(function(a, b) {
+        if (a.createdTime > b.createdTime) {
+          return order === "DESC" ? -1 : 1;
+        } else {
+          return order === "DESC" ? 1 : -1;
+        }
+      })
+    });
+    const photoArray = new Array(this.state.itemsPerPage).map((el, i) => {
+      console.log(el, i, "array");
+      return this.state.displayedPhotos[
+        this.state.itemsPerPage * this.state.currentPage + i
+      ];
     });
     this.setState({
-      displayedPhotos: [
-        this.state.displayedPhotos[0],
-        this.state.displayedPhotos[1],
-        this.state.displayedPhotos[2],
-        this.state.displayedPhotos[3],
-        this.state.displayedPhotos[4],
-        this.state.displayedPhotos[5]
-      ],
+      displayedPhotos: photoArray,
       timeFilter: order === "DESC" ? "ASC" : "DESC"
     });
   };
   handleUserNameSort = () => {
     const order = this.state.usernameFilter;
-    this.state.displayedPhotos = this.state.photos.sort(function(a, b) {
-      if (a.user > b.user) {
-        return order === "DESC" ? -1 : 1;
-      } else {
-        return order === "DESC" ? 1 : -1;
-      }
+    this.setState({
+      displayedPhotos: this.state.photos.sort(function(a, b) {
+        if (a.user > b.user) {
+          return order === "DESC" ? -1 : 1;
+        } else {
+          return order === "DESC" ? 1 : -1;
+        }
+      })
     });
     this.setState({
       displayedPhotos: [
@@ -101,12 +107,14 @@ class App extends Component {
   };
   commentsSort = () => {
     const order = this.state.commentsFilter;
-    this.state.displayedPhotos = this.state.photos.sort(function(a, b) {
-      if (a.numberOfComments > b.numberOfComments) {
-        return order === "DESC" ? -1 : 1;
-      } else {
-        return order === "DESC" ? 1 : -1;
-      }
+    this.setState({
+      displayedPhotos: this.state.photos.sort(function(a, b) {
+        if (a.numberOfComments > b.numberOfComments) {
+          return order === "DESC" ? -1 : 1;
+        } else {
+          return order === "DESC" ? 1 : -1;
+        }
+      })
     });
     this.setState({
       displayedPhotos: [
@@ -122,12 +130,14 @@ class App extends Component {
   };
   likesSort = () => {
     const order = this.state.likesFilter;
-    this.state.displayedPhotos = this.state.photos.sort(function(a, b) {
-      if (a.likes > b.likes) {
-        return order === "DESC" ? -1 : 1;
-      } else {
-        return order === "DESC" ? 1 : -1;
-      }
+    this.setState({
+      displayedPhotos: this.state.photos.sort(function(a, b) {
+        if (a.likes > b.likes) {
+          return order === "DESC" ? -1 : 1;
+        } else {
+          return order === "DESC" ? 1 : -1;
+        }
+      })
     });
     this.setState({
       displayedPhotos: [
@@ -142,24 +152,31 @@ class App extends Component {
     });
   };
   handleInstagramFilter = e => {
-    this.state.displayedPhotos = this.state.photos.filter(photo => {
-      return photo.filter === e.target.value;
-    });
-    this.setState({
-      displayedPhotos: [
-        this.state.displayedPhotos[0] || {},
-        this.state.displayedPhotos[1] || {},
-        this.state.displayedPhotos[2] || {},
-        this.state.displayedPhotos[3] || {},
-        this.state.displayedPhotos[4] || {},
-        this.state.displayedPhotos[5] || {}
-      ]
-    });
+    if (e.target.value === "None") {
+      this.setState({
+        displayedPhotos: this.state.photos
+      });
+    } else {
+      this.setState({
+        displayedPhotos: this.state.photos.filter(photo => {
+          return photo.filter === e.target.value;
+        })
+      });
+      this.setState({
+        displayedPhotos: [
+          this.state.displayedPhotos[0] || {},
+          this.state.displayedPhotos[1] || {},
+          this.state.displayedPhotos[2] || {},
+          this.state.displayedPhotos[3] || {},
+          this.state.displayedPhotos[4] || {},
+          this.state.displayedPhotos[5] || {}
+        ]
+      });
+    }
   };
   render() {
     const {
       displayedPhotos,
-      handleTimeFilter,
       timeFilter,
       usernameFilter,
       commentsFilter,
