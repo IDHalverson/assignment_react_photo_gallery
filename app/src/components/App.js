@@ -51,17 +51,9 @@ class App extends Component {
     const order = this.state.timeFilter;
     photos.sort(function(a, b) {
       if (a.createdTime > b.createdTime) {
-        if (order === "DESC") {
-          return -1;
-        } else {
-          return 1;
-        }
+        return order === "DESC" ? -1 : 1;
       } else {
-        if (order === "DESC") {
-          return 1;
-        } else {
-          return -1;
-        }
+        return order === "DESC" ? 1 : -1;
       }
     });
     this.setState({
@@ -80,17 +72,9 @@ class App extends Component {
     const order = this.state.usernameFilter;
     photos.sort(function(a, b) {
       if (a.user > b.user) {
-        if (order === "DESC") {
-          return -1;
-        } else {
-          return 1;
-        }
+        return order === "DESC" ? -1 : 1;
       } else {
-        if (order === "DESC") {
-          return 1;
-        } else {
-          return -1;
-        }
+        return order === "DESC" ? 1 : -1;
       }
     });
     this.setState({
@@ -109,17 +93,9 @@ class App extends Component {
     const order = this.state.commentsFilter;
     photos.sort(function(a, b) {
       if (a.numberOfComments > b.numberOfComments) {
-        if (order === "DESC") {
-          return -1;
-        } else {
-          return 1;
-        }
+        return order === "DESC" ? -1 : 1;
       } else {
-        if (order === "DESC") {
-          return 1;
-        } else {
-          return -1;
-        }
+        return order === "DESC" ? 1 : -1;
       }
     });
     this.setState({
@@ -138,17 +114,9 @@ class App extends Component {
     const order = this.state.likesFilter;
     photos.sort(function(a, b) {
       if (a.likes > b.likes) {
-        if (order === "DESC") {
-          return -1;
-        } else {
-          return 1;
-        }
+        return order === "DESC" ? -1 : 1;
       } else {
-        if (order === "DESC") {
-          return 1;
-        } else {
-          return -1;
-        }
+        return order === "DESC" ? 1 : -1;
       }
     });
     this.setState({
