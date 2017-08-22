@@ -34,25 +34,29 @@ class App extends Component {
   constructor() {
     super();
 
+    const numberOfPages = Array.apply("P", Array(photos.length / 6));
+
     this.state = {
       photos: photos,
-      displayedPhotos: [],
+      displayedPhotos: [
+        photos[0],
+        photos[1],
+        photos[2],
+        photos[3],
+        photos[4],
+        photos[5]
+      ],
       currentPage: 0,
       itemsPerPage: 6,
       timeFilter: "DESC",
       usernameFilter: "DESC",
       likesFilter: "DESC",
-      commentsFilter: "DESC"
+      commentsFilter: "DESC",
+      numberOfPages: numberOfPages
     };
-    this.state.displayedPhotos = this.paginate(this.state.photos);
-    this.state.numberOfPages = Array.apply(
-      "P",
-      Array(this.state.photos.length / this.state.itemsPerPage)
-    );
   }
 
   paginate = photos => {
-    console.log(this.state.numberOfPages);
     const displayedPhotos = sortedPhotos;
     const currentPage = this.state.currentPage;
     const itemsPerPage = this.state.itemsPerPage;
@@ -67,24 +71,23 @@ class App extends Component {
     this.setState({
       numberOfPages: Array.apply(
         "P",
-        Array(paginatedPhotos.length / this.state.itemsPerPage)
+        Array(displayedPhotos.length / this.state.itemsPerPage)
       )
     });
     return paginatedPhotos;
   };
   ChangePage = e => {
-    console.log(e.target.value, "e");
     let newPage;
-    if (isNaN(e.target.value) === true) {
-      if (e.target.value === "back" && this.state.currentPage > 1) {
+    if (e.target.value === "back" || e.target.value === "forward") {
+      if (e.target.value === "back" && this.state.currentPage > 0) {
         newPage = this.state.currentPage - 1;
       } else {
-        if (this.state.currentPage < this.state.numberOfPages.length) {
+        if (this.state.currentPage < this.state.numberOfPages.length - 1) {
           newPage = this.state.currentPage + 1;
         }
       }
     } else {
-      newPage = e.target.value;
+      newPage = e.target.value - 1;
     }
     this.setState({
       currentPage: newPage,

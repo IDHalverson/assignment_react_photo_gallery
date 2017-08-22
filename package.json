@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/KaraThrash/assignment_react_photo_gallery/issues"
   },
-  "homepage": "https://github.com/KaraThrash/assignment_react_photo_gallery#readme"
+  "homepage": "https://github.com/KaraThrash/assignment_react_photo_gallery#readme",
+  "dependencies": {
+    "bootstrap": "^3.3.7"
+  }
 }
