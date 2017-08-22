@@ -27,11 +27,19 @@ var filters = [
   "Ludwig"
 ];
 
+// PAGINATION = = =
+// new Array(this.state.itemsPerPage).map((el, i) => {
+//   return [
+//     this.photos[this.state.currentPage * this.state.itemsPerPage + (i + 1)]
+//   ];
+// });
+
 class App extends Component {
   constructor() {
     super();
 
     this.state = {
+      photos: photos,
       displayedPhotos: [
         photos[0],
         photos[1],
@@ -40,6 +48,8 @@ class App extends Component {
         photos[4],
         photos[5]
       ],
+      currentPage: 1,
+      itemsPerPage: 6,
       timeFilter: "DESC",
       usernameFilter: "DESC",
       likesFilter: "DESC",
@@ -49,7 +59,7 @@ class App extends Component {
 
   handleTimeFilter = () => {
     const order = this.state.timeFilter;
-    photos.sort(function(a, b) {
+    this.state.photos.sort(function(a, b) {
       if (a.createdTime > b.createdTime) {
         return order === "DESC" ? -1 : 1;
       } else {
@@ -58,19 +68,19 @@ class App extends Component {
     });
     this.setState({
       displayedPhotos: [
-        photos[0],
-        photos[1],
-        photos[2],
-        photos[3],
-        photos[4],
-        photos[5]
+        this.state.photos[0],
+        this.state.photos[1],
+        this.state.photos[2],
+        this.state.photos[3],
+        this.state.photos[4],
+        this.state.photos[5]
       ],
       timeFilter: order === "DESC" ? "ASC" : "DESC"
     });
   };
   handleUserNameSort = () => {
     const order = this.state.usernameFilter;
-    photos.sort(function(a, b) {
+    this.state.photos.sort(function(a, b) {
       if (a.user > b.user) {
         return order === "DESC" ? -1 : 1;
       } else {
@@ -79,19 +89,19 @@ class App extends Component {
     });
     this.setState({
       displayedPhotos: [
-        photos[0],
-        photos[1],
-        photos[2],
-        photos[3],
-        photos[4],
-        photos[5]
+        this.state.photos[0],
+        this.state.photos[1],
+        this.state.photos[2],
+        this.state.photos[3],
+        this.state.photos[4],
+        this.state.photos[5]
       ],
       usernameFilter: order === "DESC" ? "ASC" : "DESC"
     });
   };
   commentsSort = () => {
     const order = this.state.commentsFilter;
-    photos.sort(function(a, b) {
+    this.state.photos.sort(function(a, b) {
       if (a.numberOfComments > b.numberOfComments) {
         return order === "DESC" ? -1 : 1;
       } else {
@@ -100,19 +110,19 @@ class App extends Component {
     });
     this.setState({
       displayedPhotos: [
-        photos[0],
-        photos[1],
-        photos[2],
-        photos[3],
-        photos[4],
-        photos[5]
+        this.state.photos[0],
+        this.state.photos[1],
+        this.state.photos[2],
+        this.state.photos[3],
+        this.state.photos[4],
+        this.state.photos[5]
       ],
       commentsFilter: order === "DESC" ? "ASC" : "DESC"
     });
   };
   likesSort = () => {
     const order = this.state.likesFilter;
-    photos.sort(function(a, b) {
+    this.state.photos.sort(function(a, b) {
       if (a.likes > b.likes) {
         return order === "DESC" ? -1 : 1;
       } else {
@@ -121,18 +131,18 @@ class App extends Component {
     });
     this.setState({
       displayedPhotos: [
-        photos[0],
-        photos[1],
-        photos[2],
-        photos[3],
-        photos[4],
-        photos[5]
+        this.state.photos[0],
+        this.state.photos[1],
+        this.state.photos[2],
+        this.state.photos[3],
+        this.state.photos[4],
+        this.state.photos[5]
       ],
       likesFilter: order === "DESC" ? "ASC" : "DESC"
     });
   };
   handleInstagramFilter = e => {
-    const filteredphotos = photos.filter(photo => {
+    const filteredphotos = this.state.photos.filter(photo => {
       return photo.filter === e.target.value;
     });
     this.setState({
