@@ -1,0 +1,19 @@
+{
+  "name": "assignment_react_photo_gallery",
+  "version": "1.0.0",
+  "description": "Finally we can search and sort all our selfies using React",
+  "main": "photos.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KaraThrash/assignment_react_photo_gallery.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KaraThrash/assignment_react_photo_gallery/issues"
+  },
+  "homepage": "https://github.com/KaraThrash/assignment_react_photo_gallery#readme"
+}
