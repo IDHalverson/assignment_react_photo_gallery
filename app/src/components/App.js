@@ -3,6 +3,7 @@ import logo from "../logo.svg";
 import "../App.css";
 import { PhotosDisplay } from "./PhotosDisplay";
 import { InstagramFilter } from "./InstagramFilter";
+import { MakePages } from "./MakePages";
 import { Button } from "./Button";
 
 const photos = require("../photos").data.map(post => {
@@ -13,10 +14,12 @@ const photos = require("../photos").data.map(post => {
     likes: post.likes ? post.likes.count : "",
     createdTime: Number(post.created_time),
     filter: post.filter,
-    numberOfComments: post.comments.count
+    numberOfComments: post.comments.count,
+    linkToPage: post.link
   };
 });
 var sortedPhotos = photos;
+
 const filters = [
   "None",
   "Normal",
@@ -55,15 +58,39 @@ class App extends Component {
     const itemsPerPage = this.state.itemsPerPage;
     const arrayLength = Array.apply("1", Array(this.state.itemsPerPage));
     const paginatedPhotos = [];
-    this.state.currentPage = 0;
+    this.setState({ currentPage: 0 });
     arrayLength.forEach((el, i) => {
       paginatedPhotos.push(
         displayedPhotos[itemsPerPage * currentPage + i] || {}
       );
     });
+    this.setState({
+      numberOfPages: Array.apply(
+        "P",
+        Array(paginatedPhotos.length / this.state.itemsPerPage)
+      )
+    });
     return paginatedPhotos;
   };
-
+  ChangePage = e => {
+    console.log(e.target.value, "e");
+    let newPage;
+    if (isNaN(e.target.value) === true) {
+      if (e.target.value === "back" && this.state.currentPage > 1) {
+        newPage = this.state.currentPage - 1;
+      } else {
+        if (this.state.currentPage < this.state.numberOfPages.length) {
+          newPage = this.state.currentPage + 1;
+        }
+      }
+    } else {
+      newPage = e.target.value;
+    }
+    this.setState({
+      currentPage: newPage,
+      displayedPhotos: this.paginate(this.state.displayedPhotos)
+    });
+  };
   handleTimeFilter = () => {
     const order = this.state.timeFilter;
     sortedPhotos = this.state.photos.sort(function(a, b) {
@@ -140,7 +167,8 @@ class App extends Component {
       timeFilter,
       usernameFilter,
       commentsFilter,
-      likesFilter
+      likesFilter,
+      numberOfPages
     } = this.state;
 
     return (
@@ -166,6 +194,7 @@ class App extends Component {
           handler={this.handleInstagramFilter}
         />
         <PhotosDisplay currentPhotos={displayedPhotos} />
+        <MakePages pageArray={numberOfPages} handler={this.ChangePage} />
       </div>
     );
   }

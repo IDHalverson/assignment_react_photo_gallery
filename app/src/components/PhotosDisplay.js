@@ -10,7 +10,9 @@ class PhotosDisplay extends Component {
           }
           return (
             <div key={el.image}>
-              <img src={el.image} key={el.image} alt="logo" />
+              <a href={el.linkToPage}>
+                <img src={el.image} key={el.image} alt="logo" />
+              </a>
               <h6>
                 Posted By: {el.user}
               </h6>
