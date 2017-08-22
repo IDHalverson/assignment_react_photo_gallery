@@ -5,14 +5,23 @@ class PhotosDisplay extends Component {
     return (
       <div className="container">
         {this.props.currentPhotos.map(el => {
+          if (!Object.keys(el).length) {
+            return "";
+          }
           return (
             <div>
               <img src={el.image} key={el.image} alt="logo" />
               <h6>
-                {el.user} :Made:
-                {el.createdTime} space:
-                {el.likes} likes
-                {el.numberOfComments} comments
+                Posted By: {el.user}
+              </h6>
+              <h6>
+                Created At: {el.createdTime}
+              </h6>
+              <h6>
+                Likes: {el.likes}
+              </h6>
+              <h6>
+                Comments: {el.numberOfComments}
               </h6>
             </div>
           );

@@ -4,15 +4,7 @@ import "../App.css";
 import { PhotosDisplay } from "./PhotosDisplay";
 import { InstagramFilter } from "./InstagramFilter";
 import { Button } from "./Button";
-const placeHolderPhoto = {
-  image: "picture.jpg",
-  user: "nothing",
-  caption: "",
-  likes: "",
-  createdTime: 1,
-  filter: "",
-  numberOfComments: 1
-};
+
 const photos = require("../photos").data.map(post => {
   return {
     image: post.images.standard_resolution.url,
@@ -24,7 +16,16 @@ const photos = require("../photos").data.map(post => {
     numberOfComments: post.comments.count
   };
 });
-console.log(photos);
+
+var filters = [
+  "None",
+  "Normal",
+  "Lark",
+  "Reyes",
+  "Valencia",
+  "Inkwell",
+  "Ludwig"
+];
 
 class App extends Component {
   constructor() {
@@ -163,22 +164,22 @@ class App extends Component {
     });
   };
   handleInstagramFilter = e => {
-    let filteredphotos = photos.filter(photo => {
+    const filteredphotos = photos.filter(photo => {
       return photo.filter === e.target.value;
     });
     this.setState({
       displayedPhotos: [
-        filteredphotos[0] || placeHolderPhoto,
-        filteredphotos[1] || placeHolderPhoto,
-        filteredphotos[2] || placeHolderPhoto,
-        filteredphotos[3] || placeHolderPhoto,
-        filteredphotos[4] || placeHolderPhoto,
-        filteredphotos[5] || placeHolderPhoto
+        filteredphotos[0] || {},
+        filteredphotos[1] || {},
+        filteredphotos[2] || {},
+        filteredphotos[3] || {},
+        filteredphotos[4] || {},
+        filteredphotos[5] || {}
       ]
     });
   };
   render() {
-    let {
+    const {
       displayedPhotos,
       handleTimeFilter,
       timeFilter,
@@ -186,12 +187,9 @@ class App extends Component {
       commentsFilter,
       likesFilter
     } = this.state;
+
     return (
       <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
         <Button
           handler={this.handleTimeFilter}
           sortBy={timeFilter}
@@ -208,11 +206,10 @@ class App extends Component {
           sortBy={commentsFilter}
           type={"Number of Comments"}
         />
-        <InstagramFilter handler={this.handleInstagramFilter} />
-
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <InstagramFilter
+          options={filters}
+          handler={this.handleInstagramFilter}
+        />
         <PhotosDisplay currentPhotos={displayedPhotos} />
       </div>
     );
